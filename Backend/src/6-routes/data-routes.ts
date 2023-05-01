@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import ItemModel from "../2-models/route-model";
 import dataService from "../5-services/data-service";
+import imageHandler from "../4-utils/image-handler";
 
 const router = express.Router();
 
@@ -13,6 +14,17 @@ router.get("/routes", async (request: Request, response: Response, next: NextFun
     }
   }
 );
+
+router.get("/routes/images/:imageName", async (request: Request, response: Response, next: NextFunction) => {
+  try {
+      const imageName = request.params.imageName;
+      const imagePath = imageHandler.getImagePath(imageName);
+      response.sendFile(imagePath);
+  }
+  catch(err: any) {
+      next(err);
+  }
+});
 
 // router.get(
 //   "/items-per-categories/:categoryId",

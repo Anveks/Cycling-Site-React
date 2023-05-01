@@ -1,0 +1,6 @@
+1. database
+2. get all route + handle images
+3. basic client-side with data from get all
+4. auth-register-login backend:
+ - user - adding to favorites/filters/seeing route details
+ - admin - CRUD features/seeing all users + user activity

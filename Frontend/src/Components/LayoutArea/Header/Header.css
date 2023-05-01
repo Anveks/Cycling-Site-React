@@ -1,3 +1,35 @@
 .Header {
-	
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 85%;
+  height: 4rem;
+  background-color: white;
+  color: #333333;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  font-size: 30px;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-style: italic;
+}
+
+.logo img {
+  height: 64px;
+}
+
+.navigation {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+

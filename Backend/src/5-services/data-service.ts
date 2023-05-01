@@ -2,11 +2,19 @@ import { OkPacket } from "mysql";
 import { ResourceNotFoundError } from "../2-models/client-errors";
 import { default as ItemModel, default as RouteModel } from "../2-models/route-model";
 import dal from "../4-utils/dal";
+import appConfig from "../4-utils/app-config";
 
 async function getAllRoutes(): Promise<RouteModel[]> {
-  const sql = "SELECT * FROM routes";
+  const sql = `SELECT *, CONCAT('${appConfig.imageUrl}', routes.image) AS imageUrl FROM routes`;
   const routes = await dal.execute(sql);
   return routes;
+}
+
+async function getImgName(routeId: number): Promise<string> {
+  const sql = `SELECT image AS imageFileName FROM routes WHERE routeId = ?`;
+  const result = await dal.execute(sql, [routeId]);
+  const imageName = result[0]?.imageFileName;
+  return imageName;
 }
 
 // async function getItemsByCategory(categoryId: number): Promise<ItemModel[]> {
@@ -54,6 +62,7 @@ async function getAllRoutes(): Promise<RouteModel[]> {
 
 export default {
   getAllRoutes,
+  getImgName
   // getItemsByCategory,
   // addItem,
   // deleteItem,

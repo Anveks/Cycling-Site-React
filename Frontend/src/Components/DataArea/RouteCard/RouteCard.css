@@ -1,0 +1,24 @@
+.RouteCard {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.RouteCard > p {
+  margin: 0;
+}
+
+.RouteCard > img {
+	height: 250px;
+  width: 350px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.RouteCard > img:hover{
+  transform: scale(1.01);
+}
+
+.details {
+  display: flex;
+}

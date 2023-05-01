@@ -1,10 +1,12 @@
+import RoutesList from "../../DataArea/RoutesList/RoutesList";
+import Header from "../../LayoutArea/Header/Header";
 import "./Home.css";
-import img from "../../../Assets/background.jpg"
 
 function Home(): JSX.Element {
     return (
         <div className="Home">
-            <img src={img}  />
+            <Header />
+            <RoutesList />
         </div>
     );
 }

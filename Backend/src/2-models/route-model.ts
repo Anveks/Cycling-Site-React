@@ -1,3 +1,4 @@
+import { UploadedFile } from "express-fileupload";
 import DifficultyModel from "./difficulty-model";
 
 class RouteModel {
@@ -11,6 +12,7 @@ class RouteModel {
   difficulty: DifficultyModel;
   description: string;
   image: string;
+  imageFile: UploadedFile;
 
   public constructor(route: RouteModel) {
     this.routeId = route.routeId;
@@ -23,6 +25,7 @@ class RouteModel {
     this.difficulty = route.difficulty;
     this.description = route.description;
     this.image = route.image;
+    this.imageFile = route.imageFile;
   }
 }
 
