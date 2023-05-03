@@ -4,6 +4,7 @@ import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import MapIcon from '@mui/icons-material/Map';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 function RouteCard(props: any): JSX.Element {
 
@@ -42,6 +43,7 @@ function RouteCard(props: any): JSX.Element {
                 <div className="duration-distance">
                     <p> <AccessTimeIcon /> Duration: {props.route.time} h</p>
                     <p> <MapIcon /> Distance: {props.route.distance} km</p>
+                    <p className="location"> <LocationOnIcon /> Location: {props.route.startingPoint}</p>
                 </div>
             </div>
         </div>

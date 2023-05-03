@@ -1,11 +1,16 @@
 import axios from "axios";
 import appConfig from "../Utils/AppConfig";
 import RouteModel from "../Models/RouteModel";
+import { RoutesActionType, routesStore } from "../Redux/RoutesState";
 
 class DataService {
   public async getAllRoutes(): Promise<RouteModel[]> {
-    const response = await axios.get<RouteModel[]>(appConfig.routesURL);
-    const routes = response.data;
+    let routes = routesStore.getState().routes;
+    if(routes.length === 0) {
+      const response = await axios.get<RouteModel[]>(appConfig.routesURL);
+      routes = response.data;
+      routesStore.dispatch({ type: RoutesActionType.FetchRoutes, payload: routes })
+    }
     return routes;
   }
 
