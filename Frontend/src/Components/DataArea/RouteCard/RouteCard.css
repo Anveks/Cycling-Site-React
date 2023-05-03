@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-.RouteCard > p {
-  margin: 0;
-}
-
 .RouteCard > img {
 	height: 250px;
   width: 350px;
@@ -21,4 +17,30 @@
 
 .details {
   display: flex;
+  justify-content: space-between;
+  border-top: 1px solid;
+}
+
+.date {
+  background-color: #333333;
+  color: whitesmoke;
+  padding: 10px;
+  font-size: 27px;
+  font-weight: bold;
+  border-radius: 2px;
+}
+
+.duration-distance {
+  text-align: left;
+  font-style: italic;
+}
+
+.title{
+  margin: 5px 0 5px 0;
+}
+
+.difficulty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

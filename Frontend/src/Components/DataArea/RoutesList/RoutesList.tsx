@@ -16,6 +16,7 @@ function RoutesList(): JSX.Element {
 
     return (
         <div className="RoutesList">
+            {/* <h2>Choose your next challenge!</h2> */}
             {routes.map((r) => (<RouteCard route={r} key={r.routeId}></RouteCard>))}
         </div>
     );
