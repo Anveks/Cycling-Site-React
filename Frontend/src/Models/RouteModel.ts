@@ -8,7 +8,7 @@ class RouteModel {
   endPoint: string;
   distance: number;
   time: number;
-  difficulty: DifficultyModel;
+  difficultyId: DifficultyModel;
   description: string;
   image: string;
 

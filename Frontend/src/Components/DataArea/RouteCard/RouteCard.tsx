@@ -29,14 +29,14 @@ function RouteCard(props: any): JSX.Element {
             <img src={props.route.imageUrl} alt="" />
             <h2 className="title">{props.route.name}</h2>
 
-            <p className="difficulty">
-                Difficulty:
+            <div className="difficulty">
+                <p>Difficulty:</p>
                 {stars.map((s, index: number) =>
                     index < diff
                         ? (<StarIcon key={index} />)
                         : (<StarOutlineIcon key={index} />)
                 )}
-            </p>
+            </div>
 
             <div className="details">
                 <p className="date">{formatDate(props.route.date)}</p>

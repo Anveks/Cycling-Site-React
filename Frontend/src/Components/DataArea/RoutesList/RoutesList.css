@@ -31,13 +31,35 @@
 	padding: 10px;
 	border-radius: 15px;
 	border: 2px solid darkgray;
+	font-size: 16px;
 }
 
 .filter {
 	background-color: darkgray;
-	padding: 10px;
-	border-radius: 15px;
+	padding: 5px;
+	border-radius: 5px;
 	/* color: black; */
 	font-weight: bold;
+	display: flex;
+	gap: 5px;
+}
+
+.filter > select {
+	/* padding: 5px; */
+	border-radius: 2px;
+	border: 2px solid whitesmoke;
+	padding: 4px;
+	font-size: 16px;
+}
+
+.dist {
+	display: flex;
+	align-items: center;
+	/* margin-left: 10px; */
+	font-weight: normal;
+	background-color: white;
+	border-radius: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 

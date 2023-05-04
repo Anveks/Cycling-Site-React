@@ -5,7 +5,9 @@ import dataService from "../../../Services/DataService";
 import notifyService from "../../../Services/NotifyService";
 import RouteCard from "../RouteCard/RouteCard";
 import SearchIcon from '@mui/icons-material/Search';
-import { routesStore } from "../../../Redux/RoutesState";
+import { RoutesState, routesStore } from "../../../Redux/RoutesState";
+import DifficultyModel from "../../../Models/DifficultyModel";
+import LocationEnum from "../../../Models/LocationEnumModel";
 
 function RoutesList(): JSX.Element {
 
@@ -16,15 +18,42 @@ function RoutesList(): JSX.Element {
             .catch((err) => notifyService.error(err));
     }, []);
 
+    let filteredRoutes: RouteModel[] = routesStore.getState().routes; // copy of the main array
+    const diffKeys: any[] = Object.values(DifficultyModel).filter(value => typeof value === 'string'); // options for diff selector
+    const locationKeys: string[] = Object.values(LocationEnum).filter(value => typeof value === 'string');;
+    console.log(locationKeys);
+
+    const [distance, setDistance] = useState<number>(50);
+    const distanceArr = Array.from(routesStore.getState().routes.map((r) => { return r.distance }));
+
     function handleSearch(e: any): any {
         const searchText = e.target.value.toLowerCase();
-        let searchResult: RouteModel[] = routesStore.getState().routes;
-        if (searchText !== "") searchResult = searchResult.filter((r) => r.name.toLowerCase().includes(searchText));
-        setRoutes(searchResult);
+        if (searchText !== "") {
+            filteredRoutes = filteredRoutes.filter((r) => r.name.toLowerCase().includes(searchText));
+            setRoutes(filteredRoutes);
+        }
+        setRoutes(filteredRoutes);
     }
 
-    function handleFilter(e: any): any {
-        console.log(e.target.value);
+    function handleDiffFilter(e: any): any {
+        setRoutes(routesStore.getState().routes)
+        const inputVal = e.target.value;
+        if (inputVal !== 0) {
+            filteredRoutes = filteredRoutes.filter((r) => r.difficultyId === +inputVal);
+            setRoutes(filteredRoutes)
+        }
+    }
+
+    function handleLocationChange(e: any): any {
+        const inputVal = e.target.value;
+        filteredRoutes = filteredRoutes.filter((r) => r.startingPoint.toLowerCase().includes(inputVal.toLowerCase()));
+        setRoutes(filteredRoutes);
+    }
+
+    function handleDisChange(e: any) {
+        setDistance(e.target.value);
+        filteredRoutes = filteredRoutes.filter((r) => r.distance <= distance);
+        setRoutes(filteredRoutes);
     }
 
     return (
@@ -38,16 +67,35 @@ function RoutesList(): JSX.Element {
                 </div>
                 |
                 <div className="filter">
-                    {/* <label htmlFor="">Filter:</label> */}
-                    <select onChange={(e) => handleFilter(e)}>
-                        <option selected disabled>Difficulty</option>
-                        {routes.map((r) => (<option value={r.difficulty} key={r.difficulty}>{r.difficulty}</option>))}
+                    <select onChange={(e) => handleDiffFilter(e)}>
+                        <option selected disabled key=''>Difficulty</option>
+                        {diffKeys.map((item: string, index: number) =>
+                            <option key={index} value={+index + 1} onChange={(e) => handleDiffFilter(e)}>{item}</option>
+                        )}
                     </select>
-                </div>
 
+                    <select onChange={(e) => handleLocationChange(e)}>
+                        <option selected disabled key=''>Location</option>
+                        {locationKeys.map((l, index) => <option key={index} value={l}>{l}</option>)}
+                    </select>
+
+                    <div className="dist">
+                        <label> Distance: </label>
+                        <input
+                            type="range"
+                            min={Math.min(...distanceArr)}
+                            max={Math.max(...distanceArr) + 5}
+                            step="1"
+                            value={distance}
+                            onChange={(e) => { handleDisChange(e) }}></input>
+                        {distance} km
+                    </div>
+
+                </div>
             </div>
 
             <div className="RoutesList">
+                {routes.length === 0 && "Oops! No routes found... Try changing the filters."}
                 {routes.map((r) => (<RouteCard route={r} key={r.routeId}></RouteCard>))}
             </div>
         </>
