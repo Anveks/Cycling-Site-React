@@ -4,8 +4,17 @@ import { default as ItemModel, default as RouteModel } from "../2-models/route-m
 import dal from "../4-utils/dal";
 import appConfig from "../4-utils/app-config";
 
-async function getAllRoutes(): Promise<RouteModel[]> {
-  const sql = `SELECT *, CONCAT('${appConfig.imageUrl}', routes.image) AS imageUrl FROM routes`;
+async function getAllRoutes(userId?: number): Promise<RouteModel[]> {
+  let sql = `SELECT *, CONCAT('${appConfig.imageUrl}', routes.image) AS imageUrl FROM routes`;
+
+  if (userId) sql = `SELECT R.*, CONCAT('${appConfig.imageUrl}', routes.image) AS imageUrl
+      CASE 
+          WHEN F.routeId IS NULL THEN false 
+          ELSE true 
+      END AS isFavorite
+    FROM routes R
+    LEFT JOIN favorites F ON R.routeId = F.routeId AND F.userId = ${userId};`;
+
   const routes = await dal.execute(sql);
   return routes;
 }

@@ -15,9 +15,9 @@ async function register(user: UserModel): Promise<string>{
   user.roleId = RoleModel.User;
   user.password = cyber.hashPassword(user.password);
   
-  const sql = `INSERT INTO users VALUES(NULL, ?, ?, ?, ?, ?)`;
+  const sql = `INSERT INTO users VALUES(NULL, ?, ?, ?, ?, ?, ?)`;
 
-  const result: OkPacket = await dal.execute(sql, [user.firstName, user.lastName, user.password, user.email, user.roleId]);
+  const result: OkPacket = await dal.execute(sql, [user.firstName, user.lastName, user.email, user.password, user.profilePicture, user.roleId]);
   user.userId = result.insertId;
 
   // add token

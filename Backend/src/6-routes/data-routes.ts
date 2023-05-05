@@ -2,11 +2,20 @@ import express, { Request, Response, NextFunction } from "express";
 import ItemModel from "../2-models/route-model";
 import dataService from "../5-services/data-service";
 import imageHandler from "../4-utils/image-handler";
+import cyber from "../4-utils/cyber";
 
 const router = express.Router();
 
 router.get("/routes", async (request: Request, response: Response, next: NextFunction) => {
     try {
+      const header = request.headers; // get the authorization header
+      // const token = header?.substring(7); // extract token
+      // const user = await cyber.decodeToken(token); // decode it and extract the user
+      console.log(header);
+      // if (user) {
+      //   let routes = await dataService.getAllRoutes();
+      // }
+      // const routes = await dataService.getAllRoutes(user?.userId);
       const routes = await dataService.getAllRoutes();
       response.json(routes);
     } catch (err: any) {

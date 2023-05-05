@@ -1,10 +1,10 @@
 import "./Register.css";
 import { useForm } from "react-hook-form";
-import UserModel from "../../Models/UserModel"
-import authService from "../../Services/AuthService";
 import { Link, useNavigate } from "react-router-dom";
-import notifyService from "../../Services/NotifyService";
 import { useState } from "react";
+import UserModel from "../../../Models/UserModel";
+import authService from "../../../Services/AuthService";
+import notifyService from "../../../Services/NotifyService";
 
 function Register(): JSX.Element {
 

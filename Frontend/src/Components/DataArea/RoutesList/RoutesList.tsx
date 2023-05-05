@@ -18,6 +18,9 @@ function RoutesList(): JSX.Element {
             .catch((err) => notifyService.error(err));
     }, []);
 
+    console.log(routes);
+
+
     let filteredRoutes: RouteModel[] = routesStore.getState().routes; // copy of the main array
     const diffKeys: any[] = Object.values(DifficultyModel).filter(value => typeof value === 'string'); // options for diff selector
     const locationKeys: string[] = Object.values(LocationEnum).filter(value => typeof value === 'string');;

@@ -1,8 +1,13 @@
 import "./Header.css";
 import logo from '../../../Assets/logo.jpg';
 import { NavLink } from "react-router-dom";
+import { authStore } from "../../../Redux/AuthState";
+import Logout from "../../AuthArea/Logout/Logout";
 
 function Header(): JSX.Element {
+
+    const user: any = authStore.getState().user;
+
     return (
         <div className="Header">
 
@@ -14,8 +19,14 @@ function Header(): JSX.Element {
             <div className="navigation">
                 <NavLink to="#">About</NavLink>
                 <NavLink to="#">Community</NavLink>
-                <NavLink to="#">Login | Sign Up</NavLink>
+                {user && <Logout />}
             </div>
+
+            {!user && <div className="navigation">
+                && <NavLink to="/login">Login</NavLink>
+                |
+                <NavLink to="/register">Sign Up</NavLink>
+            </div>}
 
         </div>
     );

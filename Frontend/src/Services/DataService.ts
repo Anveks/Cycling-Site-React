@@ -4,7 +4,7 @@ import RouteModel from "../Models/RouteModel";
 import { RoutesActionType, routesStore } from "../Redux/RoutesState";
 
 class DataService {
-  public async getAllRoutes(): Promise<RouteModel[]> {
+  public async getAllRoutes(userId?: number): Promise<RouteModel[]> {
     let routes = routesStore.getState().routes;
     if(routes.length === 0) {
       const response = await axios.get<RouteModel[]>(appConfig.routesURL);
