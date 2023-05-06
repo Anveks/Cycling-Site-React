@@ -7,10 +7,13 @@ import MapIcon from '@mui/icons-material/Map';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { authStore } from "../../../Redux/AuthState";
 import { useEffect, useState } from "react";
+import dataService from "../../../Services/DataService";
+import { RoutesActionType, routesStore } from "../../../Redux/RoutesState";
 
 function RouteCard(props: any): JSX.Element {
 
     const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().token !== null ? true : false);
+    const [isFavorite, setIsFavorite] = useState<boolean>(props.route.isFavorite === 1 ? true : false);
 
     useEffect(() => {
         const unsubscribe = authStore.subscribe(() => {
@@ -19,6 +22,17 @@ function RouteCard(props: any): JSX.Element {
 
         return () => unsubscribe();
     }, []);
+
+    useEffect(() => {
+        const unsubscribe = routesStore.subscribe(() => {
+            const index = routesStore.getState().routes.findIndex((r) => r.routeId === props.route.routeId);
+            const isFavoriteState = routesStore.getState().routes[index].isFavorite === 1 ? true : false
+
+            setIsFavorite(isFavoriteState);
+        })
+
+        return () => unsubscribe();
+    }, [])
 
     // getting the difficulty string instead of number:
     const diff = +props.route.difficultyId;
@@ -35,10 +49,25 @@ function RouteCard(props: any): JSX.Element {
         return `${day}.${month}.${year}`;
     }
 
+    async function handleFav() {
+        try {
+            // send the data to the server:
+            const routeId = props.route.routeId;
+            const follow = props.route.isFavorite === 1 ? 0 : 1;
+            await dataService.setFavorite(+routeId, +follow);
+
+            // update redux storage:
+            routesStore.dispatch({ type: RoutesActionType.UpdateFavorite, payload: { routeId, follow } });
+
+        } catch (err: any) {
+            console.log(err);
+        }
+    }
+
     return (
         <div className="RouteCard">
             <img src={props.route.imageUrl} alt="" />
-            {loggedIn && <p className="fav">{props.route.isFavorite === 1 ? <StarIcon style={{ color: 'goldenrod' }} /> : <StarOutlineIcon style={{ color: "white" }} />}</p>}
+            {loggedIn && <b className="fav" onClick={handleFav}>{isFavorite ? <StarIcon style={{ color: 'goldenrod' }} /> : <StarOutlineIcon style={{ color: "white" }} />}</b>}
             <h2 className="title">{props.route.name}</h2>
 
             <div className="difficulty">

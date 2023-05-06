@@ -9,12 +9,8 @@ const router = express.Router();
 router.get("/routes", async (request: Request, response: Response, next: NextFunction) => {
     try {
       const userId = request.headers["user-id"];
-      console.log(userId);
-      console.log("🔥🔥🔥");
-      
       let routes: any;
       userId !== undefined ? routes = await dataService.getAllRoutes(+userId) : routes = await dataService.getAllRoutes();
-      // const routes = await dataService.getAllRoutes(+userId);
       response.json(routes);
     } catch (err: any) {
       next(err);
@@ -27,6 +23,24 @@ router.get("/routes/images/:imageName", async (request: Request, response: Respo
       const imageName = request.params.imageName;
       const imagePath = imageHandler.getImagePath(imageName);
       response.sendFile(imagePath);
+  }
+  catch(err: any) {
+      next(err);
+  }
+});
+
+router.post("/routes/set-favorite", async (request: Request, response: Response, next: NextFunction) => {
+  try {
+    const header = request.headers.authorization;
+    const token = header.substring(7);
+    const user = await cyber.decodeToken(token);
+    const userId = +user.userId;
+    const follow = request.body?.follow === 1 ? true : false;
+    const routeId = +request.body.routeId;
+    console.log(request.body);
+    
+    await dataService.setFavorite(userId, routeId, follow);
+    response.sendStatus(204);
   }
   catch(err: any) {
       next(err);

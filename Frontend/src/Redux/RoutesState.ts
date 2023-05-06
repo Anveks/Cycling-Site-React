@@ -7,7 +7,8 @@ export class RoutesState {
 
 export enum RoutesActionType {
   FetchRoutes,
-  RemoveRoutes
+  RemoveRoutes,
+  UpdateFavorite
 }
 
 export interface RouteAction {
@@ -26,6 +27,11 @@ export function routesReducer(currentState = new RoutesState(), action: RouteAct
     case RoutesActionType.RemoveRoutes:
       newState.routes = [];
       break;
+
+    case RoutesActionType.UpdateFavorite:
+        const indexToUpdate = newState.routes.findIndex((r) => r.routeId === action.payload.routeId);
+        newState.routes[indexToUpdate].isFavorite = action.payload.follow;
+        break;
   }
 
   return newState;

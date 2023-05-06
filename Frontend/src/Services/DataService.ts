@@ -25,6 +25,13 @@ class DataService {
     return routes;
   }
 
+  public async setFavorite(routeId: number, follow: number){
+    const data = { routeId, follow }
+    console.log(data);
+    
+    await axios.post(appConfig.favURL, data);
+  }
+
   // public async getItemsByCategory(categoryId: number): Promise<ItemModel[]> {
   //   const response = await axios.get<ItemModel[]>(
   //     appConfig.itemsByCategoriesUrl + categoryId

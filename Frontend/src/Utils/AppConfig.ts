@@ -5,6 +5,9 @@ class AppConfig {
     // auth URL's
     public registerUrl = "http://localhost:4000/api/auth/register"
     public loginUrl = "http://localhost:4000/api/auth/login"
+
+    // favorites URL:
+    public favURL = "http://localhost:4000/api/routes/set-favorite/"
      
 }
 

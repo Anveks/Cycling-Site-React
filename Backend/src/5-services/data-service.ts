@@ -26,6 +26,19 @@ async function getImgName(routeId: number): Promise<string> {
   return imageName;
 }
 
+async function setFavorite(userId: number, routeId: number, follow?: boolean) {
+
+  if(follow){
+    const sql = `INSERT INTO favorites (userId, routeId)
+    SELECT ?, ?
+    WHERE NOT EXISTS (SELECT 1 FROM favorites WHERE userId = ? AND routeId = ?);`;
+    await dal.execute(sql, [userId, routeId, userId, routeId]);
+  } else {
+    const sql = `DELETE FROM favorites WHERE routeId = ? and userId = ?`;
+    await dal.execute(sql, [routeId, userId]);
+  };
+};
+
 // async function getItemsByCategory(categoryId: number): Promise<ItemModel[]> {
 //   const sql = "SELECT * FROM items WHERE categoryId = ? ";
 //   const itemsByCategory = await dal.execute(sql, [categoryId]);
@@ -71,7 +84,8 @@ async function getImgName(routeId: number): Promise<string> {
 
 export default {
   getAllRoutes,
-  getImgName
+  getImgName,
+  setFavorite
   // getItemsByCategory,
   // addItem,
   // deleteItem,
