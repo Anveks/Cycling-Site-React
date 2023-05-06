@@ -7,7 +7,7 @@ import appConfig from "../4-utils/app-config";
 async function getAllRoutes(userId?: number): Promise<RouteModel[]> {
   let sql = `SELECT *, CONCAT('${appConfig.imageUrl}', routes.image) AS imageUrl FROM routes`;
 
-  if (userId) sql = `SELECT R.*, CONCAT('${appConfig.imageUrl}', routes.image) AS imageUrl
+  if (userId !== undefined) sql = `SELECT R.*, CONCAT('${appConfig.imageUrl}', R.image) AS imageUrl,
       CASE 
           WHEN F.routeId IS NULL THEN false 
           ELSE true 

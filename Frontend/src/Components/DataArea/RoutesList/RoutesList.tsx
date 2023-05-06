@@ -8,6 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { RoutesState, routesStore } from "../../../Redux/RoutesState";
 import DifficultyModel from "../../../Models/DifficultyModel";
 import LocationEnum from "../../../Models/LocationEnumModel";
+import { authStore } from "../../../Redux/AuthState";
 
 function RoutesList(): JSX.Element {
 
@@ -20,14 +21,12 @@ function RoutesList(): JSX.Element {
 
     console.log(routes);
 
-
     let filteredRoutes: RouteModel[] = routesStore.getState().routes; // copy of the main array
     const diffKeys: any[] = Object.values(DifficultyModel).filter(value => typeof value === 'string'); // options for diff selector
     const locationKeys: string[] = Object.values(LocationEnum).filter(value => typeof value === 'string');;
-    console.log(locationKeys);
 
     const [distance, setDistance] = useState<number>(50);
-    const distanceArr = Array.from(routesStore.getState().routes.map((r) => { return r.distance }));
+    const distanceArr = Array.from(routes.map((r) => { return r.distance }));
 
     function handleSearch(e: any): any {
         const searchText = e.target.value.toLowerCase();

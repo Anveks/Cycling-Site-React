@@ -8,15 +8,13 @@ const router = express.Router();
 
 router.get("/routes", async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const header = request.headers; // get the authorization header
-      // const token = header?.substring(7); // extract token
-      // const user = await cyber.decodeToken(token); // decode it and extract the user
-      console.log(header);
-      // if (user) {
-      //   let routes = await dataService.getAllRoutes();
-      // }
-      // const routes = await dataService.getAllRoutes(user?.userId);
-      const routes = await dataService.getAllRoutes();
+      const userId = request.headers["user-id"];
+      console.log(userId);
+      console.log("🔥🔥🔥");
+      
+      let routes: any;
+      userId !== undefined ? routes = await dataService.getAllRoutes(+userId) : routes = await dataService.getAllRoutes();
+      // const routes = await dataService.getAllRoutes(+userId);
       response.json(routes);
     } catch (err: any) {
       next(err);

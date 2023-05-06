@@ -5,6 +5,7 @@ import "./Login.css";
 import CredentialsModel from "../../../Models/CredentialsModel";
 import authService from "../../../Services/AuthService";
 import notifyService from "../../../Services/NotifyService";
+import { AuthActionType, authStore } from "../../../Redux/AuthState";
 
 function Login(): JSX.Element {
 
@@ -17,6 +18,7 @@ function Login(): JSX.Element {
             notifyService.success("Welcome Back!");
             // console.log(authStore.getState().user);
             // console.log(authStore.getState().token);
+            authStore.dispatch({ type: AuthActionType.UpdateLoggedIn, payload: true })
             navigate("/");
         }
         catch (err: any) {

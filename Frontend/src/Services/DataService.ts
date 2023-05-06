@@ -2,12 +2,23 @@ import axios from "axios";
 import appConfig from "../Utils/AppConfig";
 import RouteModel from "../Models/RouteModel";
 import { RoutesActionType, routesStore } from "../Redux/RoutesState";
+import { authStore } from "../Redux/AuthState";
 
 class DataService {
-  public async getAllRoutes(userId?: number): Promise<RouteModel[]> {
+  public async getAllRoutes(): Promise<RouteModel[]> {
     let routes = routesStore.getState().routes;
+    const user = authStore.getState().user;
+    const userId = user?.userId;
+    
+
+    const headers = {
+      "user-id": userId // custom header name is "user-id", value sent is userId from authStore
+    };
+
     if(routes.length === 0) {
-      const response = await axios.get<RouteModel[]>(appConfig.routesURL);
+      const response = user === null
+        ? await axios.get<RouteModel[]>(appConfig.routesURL) 
+        : await axios.get<RouteModel[]>(appConfig.routesURL, { headers })
       routes = response.data;
       routesStore.dispatch({ type: RoutesActionType.FetchRoutes, payload: routes })
     }

@@ -13,6 +13,7 @@ class RouteModel {
   description: string;
   image: string;
   imageFile: UploadedFile;
+  isFavorite?: number;
 
   public constructor(route: RouteModel) {
     this.routeId = route.routeId;

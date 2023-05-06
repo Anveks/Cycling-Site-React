@@ -11,7 +11,7 @@ class RouteModel {
   difficultyId: DifficultyModel;
   description: string;
   image: string;
-
+  isFavorite?: number;
 }
 
 export default RouteModel;

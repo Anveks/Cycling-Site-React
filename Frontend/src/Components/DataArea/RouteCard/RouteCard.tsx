@@ -5,8 +5,23 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import MapIcon from '@mui/icons-material/Map';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { authStore } from "../../../Redux/AuthState";
+import { useEffect, useState } from "react";
 
 function RouteCard(props: any): JSX.Element {
+
+    const user = authStore.getState().user;
+    const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().isLoggedIn);
+
+    useEffect(() => {
+        const unsubscribe = authStore.subscribe(() => {
+            setIsLoggedIn(authStore.getState().isLoggedIn);
+        })
+
+        return () => unsubscribe();
+    }, []);
+    console.log(loggedIn);
+
 
     // getting the difficulty string instead of number:
     // const difficulty = DifficultyModel[props.route.difficultyId];
@@ -27,6 +42,7 @@ function RouteCard(props: any): JSX.Element {
     return (
         <div className="RouteCard">
             <img src={props.route.imageUrl} alt="" />
+            {loggedIn && <p className="fav">{props.route.isFavorite === 1 ? <StarIcon style={{ color: 'goldenrod' }} /> : <StarOutlineIcon style={{ color: "white" }} />}</p>}
             <h2 className="title">{props.route.name}</h2>
 
             <div className="difficulty">
