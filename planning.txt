@@ -4,3 +4,8 @@
 4. auth-register-login backend:
  - user - adding to favorites/filters/seeing route details
  - admin - CRUD features/seeing all users + user activity
+
+ things to think about:
+ - consider a way to unite all the 3 filters functions into one 
+ - think of a way to avoid using loggedIn state in 3 separate components (duplication of code)
+ - check if sending an id via custom header of a request is an OK practice 

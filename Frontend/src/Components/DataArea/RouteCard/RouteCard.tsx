@@ -10,21 +10,17 @@ import { useEffect, useState } from "react";
 
 function RouteCard(props: any): JSX.Element {
 
-    const user = authStore.getState().user;
-    const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().isLoggedIn);
+    const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().token !== null ? true : false);
 
     useEffect(() => {
         const unsubscribe = authStore.subscribe(() => {
             setIsLoggedIn(authStore.getState().isLoggedIn);
-        })
+        });
 
         return () => unsubscribe();
     }, []);
-    console.log(loggedIn);
-
 
     // getting the difficulty string instead of number:
-    // const difficulty = DifficultyModel[props.route.difficultyId];
     const diff = +props.route.difficultyId;
 
     // create an array of 5 stars

@@ -3,7 +3,7 @@ import "./Logout.css";
 import LogoutIcon from '@mui/icons-material/Logout';
 import authService from "../../../Services/AuthService";
 import notifyService from "../../../Services/NotifyService";
-import { routesStore } from "../../../Redux/RoutesState";
+import { RoutesActionType, routesStore } from "../../../Redux/RoutesState";
 import { AuthActionType, authStore } from "../../../Redux/AuthState";
 
 
@@ -15,6 +15,7 @@ function Logout(): JSX.Element {
 
         navigate('/');
         authStore.dispatch({ type: AuthActionType.UpdateLoggedIn, payload: false })
+        routesStore.dispatch({ type: RoutesActionType.RemoveRoutes })
         // routesStore.dispatch({ type: VacationsActionType.ResetVacations });
 
     }

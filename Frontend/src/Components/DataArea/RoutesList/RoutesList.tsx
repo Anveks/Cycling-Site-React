@@ -1,23 +1,25 @@
+import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from "react";
+import DifficultyModel from "../../../Models/DifficultyModel";
+import LocationEnum from "../../../Models/LocationEnumModel";
 import RouteModel from "../../../Models/RouteModel";
-import "./RoutesList.css";
+import { routesStore } from "../../../Redux/RoutesState";
 import dataService from "../../../Services/DataService";
 import notifyService from "../../../Services/NotifyService";
 import RouteCard from "../RouteCard/RouteCard";
-import SearchIcon from '@mui/icons-material/Search';
-import { RoutesState, routesStore } from "../../../Redux/RoutesState";
-import DifficultyModel from "../../../Models/DifficultyModel";
-import LocationEnum from "../../../Models/LocationEnumModel";
-import { authStore } from "../../../Redux/AuthState";
+import "./RoutesList.css";
+import { authStore } from '../../../Redux/AuthState';
 
 function RoutesList(): JSX.Element {
 
     const [routes, setRoutes] = useState<RouteModel[]>([]);
+    const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().token !== null ? true : false);
+
     useEffect(() => {
         dataService.getAllRoutes()
             .then((res) => { setRoutes(res) })
             .catch((err) => notifyService.error(err));
-    }, []);
+    }, [loggedIn]);
 
     console.log(routes);
 
@@ -26,7 +28,7 @@ function RoutesList(): JSX.Element {
     const locationKeys: string[] = Object.values(LocationEnum).filter(value => typeof value === 'string');;
 
     const [distance, setDistance] = useState<number>(50);
-    const distanceArr = Array.from(routes.map((r) => { return r.distance }));
+    const distanceArr = Array.from(routesStore.getState().routes.map((r) => { return r.distance }));
 
     function handleSearch(e: any): any {
         const searchText = e.target.value.toLowerCase();

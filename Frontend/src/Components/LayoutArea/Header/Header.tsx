@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 
 function Header(): JSX.Element {
 
-    const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().isLoggedIn);
-    const [currentUser, setCurrentUser] = useState<any>(authStore.getState().user);
+    const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().token !== null ? true : false);
 
     useEffect(() => {
         const unsubscribe = authStore.subscribe(() => {
@@ -16,11 +15,7 @@ function Header(): JSX.Element {
         });
 
         return () => unsubscribe();
-    }, [currentUser]);
-
-    const user: any = authStore.getState().user;
-    console.log(user);
-    console.log(loggedIn);
+    }, []);
 
     return (
         <div className="Header">
@@ -34,7 +29,7 @@ function Header(): JSX.Element {
                 <div className="about-community">
                     <NavLink to="#">About</NavLink>
                     <NavLink to="#">Community</NavLink>
-                    {user !== null && <Logout />}
+                    {loggedIn && <Logout />}
                 </div>
 
                 {!loggedIn && <div className="login-register">

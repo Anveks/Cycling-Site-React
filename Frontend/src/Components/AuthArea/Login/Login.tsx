@@ -16,8 +16,6 @@ function Login(): JSX.Element {
         try {
             await authService.login(credentials);
             notifyService.success("Welcome Back!");
-            // console.log(authStore.getState().user);
-            // console.log(authStore.getState().token);
             authStore.dispatch({ type: AuthActionType.UpdateLoggedIn, payload: true })
             navigate("/");
         }

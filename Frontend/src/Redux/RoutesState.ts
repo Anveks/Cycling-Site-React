@@ -6,7 +6,8 @@ export class RoutesState {
 }
 
 export enum RoutesActionType {
-  FetchRoutes
+  FetchRoutes,
+  RemoveRoutes
 }
 
 export interface RouteAction {
@@ -22,6 +23,9 @@ export function routesReducer(currentState = new RoutesState(), action: RouteAct
       newState.routes = action.payload;
       break;
 
+    case RoutesActionType.RemoveRoutes:
+      newState.routes = [];
+      break;
   }
 
   return newState;
