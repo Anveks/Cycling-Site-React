@@ -9,6 +9,9 @@ import { authStore } from "../../../Redux/AuthState";
 import { RoutesActionType, routesStore } from "../../../Redux/RoutesState";
 import dataService from "../../../Services/DataService";
 import "./RouteCard.css";
+import { Modal } from '@mui/material';
+import RouteDetails from '../RouteDetails/RouteDetails';
+import DateFormatter from '../../../Services/DateFormatter';
 
 function RouteCard(props: { route: RouteModel }): JSX.Element {
 
@@ -22,6 +25,15 @@ function RouteCard(props: { route: RouteModel }): JSX.Element {
 
         return () => unsubscribe();
     }, []);
+
+    // for modal window:
+    const [open, setOpen] = useState(false);
+    // open/close modal:
+    function handleModal() {
+        open
+            ? setOpen(false)
+            : setOpen(true);
+    };
 
     useEffect(() => {
         const unsubscribe = routesStore.subscribe(() => {
@@ -40,15 +52,6 @@ function RouteCard(props: { route: RouteModel }): JSX.Element {
     // create an array of 5 stars
     const stars = [...Array(5)];
 
-    // date formatter:
-    function formatDate(dateString: string): string {
-        const date = new Date(dateString);
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear().toString();
-        return `${day}.${month}.${year}`;
-    }
-
     async function handleFav() {
         try {
             // send the data to the server:
@@ -66,7 +69,12 @@ function RouteCard(props: { route: RouteModel }): JSX.Element {
 
     return (
         <div className="RouteCard">
-            <img src={props.route.imageUrl} alt="" style={{ cursor: loggedIn ? 'pointer' : '' }} />
+            <img
+                src={props.route.imageUrl}
+                alt="cyclists-photo"
+                style={{ cursor: loggedIn ? 'pointer' : '' }}
+                onClick={handleModal}
+            />
             {loggedIn && <b className="fav" onClick={handleFav}>{isFavorite ? <StarIcon style={{ color: 'goldenrod' }} /> : <StarOutlineIcon style={{ color: "white" }} />}</b>}
             <h2 className="title">{props.route.name}</h2>
 
@@ -80,13 +88,22 @@ function RouteCard(props: { route: RouteModel }): JSX.Element {
             </div>
 
             <div className="details">
-                <p className="date">{formatDate(props.route.date)}</p>
+                <p className="date">{DateFormatter(props.route.date)}</p>
                 <div className="duration-distance">
                     <p> <AccessTimeIcon /> Duration: {props.route.time} h</p>
                     <p> <MapIcon /> Distance: {props.route.distance} km</p>
                     <p className="location"> <LocationOnIcon /> Location: {props.route.startingPoint}</p>
                 </div>
             </div>
+
+            <div style={{ outline: 'none' }}>
+                <Modal open={open} onClose={handleModal} >
+                    <div className="modal-content">
+                        <RouteDetails route={props.route} />
+                    </div>
+                </Modal>
+            </div>
+
         </div>
     );
 }
