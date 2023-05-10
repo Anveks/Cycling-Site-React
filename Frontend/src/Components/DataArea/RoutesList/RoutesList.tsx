@@ -3,25 +3,24 @@ import { useEffect, useState } from "react";
 import DifficultyModel from "../../../Models/DifficultyModel";
 import LocationEnum from "../../../Models/LocationEnumModel";
 import RouteModel from "../../../Models/RouteModel";
+import { authStore } from '../../../Redux/AuthState';
 import { routesStore } from "../../../Redux/RoutesState";
 import dataService from "../../../Services/DataService";
 import notifyService from "../../../Services/NotifyService";
 import RouteCard from "../RouteCard/RouteCard";
 import "./RoutesList.css";
-import { authStore } from '../../../Redux/AuthState';
 
 function RoutesList(): JSX.Element {
 
     const [routes, setRoutes] = useState<RouteModel[]>([]);
     const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().token !== null ? true : false);
 
+
     useEffect(() => {
         dataService.getAllRoutes()
             .then((res) => { setRoutes(res) })
             .catch((err) => notifyService.error(err));
     }, [loggedIn]);
-
-    console.log(routes);
 
     let filteredRoutes: RouteModel[] = routesStore.getState().routes; // copy of the main array
     const diffKeys: any[] = Object.values(DifficultyModel).filter(value => typeof value === 'string'); // options for diff selector
@@ -100,7 +99,9 @@ function RoutesList(): JSX.Element {
 
             <div className="RoutesList">
                 {routes.length === 0 && "Oops! No routes found... Try changing the filters."}
-                {routes.map((r) => (<RouteCard route={r} key={r.routeId}></RouteCard>))}
+                {routes.map((r) => (
+                    <RouteCard route={r} key={r.routeId} />
+                ))}
             </div>
         </>
     );

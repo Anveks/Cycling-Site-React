@@ -10,7 +10,7 @@ class RouteModel {
   time: number;
   difficultyId: DifficultyModel;
   description: string;
-  image: string;
+  imageUrl: string;
   isFavorite?: number;
 }
 

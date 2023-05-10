@@ -1,16 +1,16 @@
-import DifficultyModel from "../../../Models/DifficultyModel";
-import "./RouteCard.css";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import MapIcon from '@mui/icons-material/Map';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import MapIcon from '@mui/icons-material/Map';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { authStore } from "../../../Redux/AuthState";
 import { useEffect, useState } from "react";
-import dataService from "../../../Services/DataService";
+import RouteModel from "../../../Models/RouteModel";
+import { authStore } from "../../../Redux/AuthState";
 import { RoutesActionType, routesStore } from "../../../Redux/RoutesState";
+import dataService from "../../../Services/DataService";
+import "./RouteCard.css";
 
-function RouteCard(props: any): JSX.Element {
+function RouteCard(props: { route: RouteModel }): JSX.Element {
 
     const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().token !== null ? true : false);
     const [isFavorite, setIsFavorite] = useState<boolean>(props.route.isFavorite === 1 ? true : false);
@@ -66,7 +66,7 @@ function RouteCard(props: any): JSX.Element {
 
     return (
         <div className="RouteCard">
-            <img src={props.route.imageUrl} alt="" />
+            <img src={props.route.imageUrl} alt="" style={{ cursor: loggedIn ? 'pointer' : '' }} />
             {loggedIn && <b className="fav" onClick={handleFav}>{isFavorite ? <StarIcon style={{ color: 'goldenrod' }} /> : <StarOutlineIcon style={{ color: "white" }} />}</b>}
             <h2 className="title">{props.route.name}</h2>
 
