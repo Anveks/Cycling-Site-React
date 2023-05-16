@@ -5,6 +5,7 @@
   border: transparent;
   width: 50%;
   margin: 0 auto;
+  width: 100%;
 }
 
 .card {
@@ -24,6 +25,7 @@
   justify-content: space-between;
   margin: 0;
   padding: 0;
+  border-bottom: 1px solid;
 }
 
 .title > h2 {
@@ -38,7 +40,7 @@
 
 .difficulty {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
 }
 
 .date-time{
@@ -63,19 +65,28 @@
 .body {
   display: flex;
   justify-content: flex-start;
+  gap: 10px;
 }
 
-.image-slider > img {
-  width: 80%;
+.image {
+  flex: 2;
+  margin: 20px;
+  margin-left: 0;
+  margin-top: 25px;
+}
+
+.image img {
+  width: 90%;
   height: 100%;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.50);
-  /* margin-left: -20%; */
   transform: scale(1.1);
 }
 
 .dateCountdown{
+  flex: 1;
   width: 25%;
+  margin-top: 25px;
 }
 
 .dateCountdown > p{
@@ -86,6 +97,22 @@
 .dateCountdown > div {
   padding: 10px;
   border: 1px solid;
+}
+
+.map {
+  border-radius: 5px;
+  border-color: transparent !important;
+  margin-top: 10px;
+}
+
+.distance{
+  border-color: transparent !important;
+  font-weight: bold;
+}
+
+.description{
+  margin-top: 10px;
+  text-align: left;
 }
 
 /*

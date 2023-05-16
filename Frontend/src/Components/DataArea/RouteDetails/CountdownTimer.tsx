@@ -20,7 +20,7 @@ function CountdownTimer(props: any) {
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
     // Format the countdown display
-    const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    const countdownText = `${days} : ${hours} : ${minutes} : ${seconds}`;
     setCountdown(countdownText);
 
     const interval = setInterval(() => {
@@ -39,14 +39,14 @@ function CountdownTimer(props: any) {
       const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
       // Format the countdown display
-      const countdownText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      const countdownText = `${days} : ${hours} : ${minutes} : ${seconds}`;
       setCountdown(countdownText);
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  return <div className="starTimeout">{countdown}</div>;
+  return <div className="starTimeout" style={{ fontSize: "28px", fontWeight: "bold" }}> {countdown}</div >;
 }
 
 export default CountdownTimer;

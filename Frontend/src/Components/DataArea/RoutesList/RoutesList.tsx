@@ -14,7 +14,7 @@ function RoutesList(): JSX.Element {
 
     const [routes, setRoutes] = useState<RouteModel[]>([]);
     const [loggedIn, setIsLoggedIn] = useState<boolean>(authStore.getState().token !== null ? true : false);
-
+    const [clicked, setClicked] = useState<boolean>(false);
 
     useEffect(() => {
         dataService.getAllRoutes()
@@ -59,11 +59,22 @@ function RoutesList(): JSX.Element {
         setRoutes(filteredRoutes);
     }
 
+    function handleSelected() {
+        if (!clicked) {
+            setClicked(true)
+            const selectedRoutes = routes.filter((r) => r.isFavorite === 1);
+            setRoutes(selectedRoutes);
+        } else {
+            setClicked(false)
+            setRoutes(routesStore.getState().routes);
+        }
+    }
+
     return (
         <>
             <h2 className="start-title">Choose your next challenge!</h2>
 
-            <div className="search-filter">
+            {loggedIn && <div className="search-filter">
                 <div className="search">
                     <SearchIcon />
                     <input type="text" placeholder="search by name..." onChange={(e) => handleSearch(e)} />
@@ -95,7 +106,11 @@ function RoutesList(): JSX.Element {
                     </div>
 
                 </div>
-            </div>
+                |
+                <div className='selected'>
+                    <button onClick={() => handleSelected()} > {!clicked ? "Show Selected" : "Show All"} </button>
+                </div>
+            </div>}
 
             <div className="RoutesList">
                 {routes.length === 0 && "Oops! No routes found... Try changing the filters."}

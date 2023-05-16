@@ -69,3 +69,14 @@
   cursor: pointer;
   transform: scale(1.2);
 }
+
+.modal-content {
+  padding: 0;
+  width: 800px;
+  outline: none;
+  margin: 0 auto;
+}
+
+/* .modal {
+  width: 50%;
+} */

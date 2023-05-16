@@ -96,14 +96,12 @@ function RouteCard(props: { route: RouteModel }): JSX.Element {
                 </div>
             </div>
 
-            <div style={{ outline: 'none' }}>
-                <Modal open={open} onClose={handleModal} >
+            {loggedIn &&
+                <Modal open={open} onClose={handleModal} className='modal'>
                     <div className="modal-content">
                         <RouteDetails route={props.route} />
                     </div>
-                </Modal>
-            </div>
-
+                </Modal>}
         </div>
     );
 }

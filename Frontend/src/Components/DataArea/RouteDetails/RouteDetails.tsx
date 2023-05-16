@@ -44,33 +44,43 @@ function RouteDetails({ route }: RouteDetailsProps): JSX.Element {
                     </div>
                 </div>
 
-                <hr></hr>
-
                 <div className="body">
-                    <div className="image-slider">
+                    {/* image */}
+                    <div className="image">
                         <img src={imageUrl} alt="route" />
                     </div>
 
+                    {/* date */}
                     <div className="dateCountdown">
                         <p>STARTS IN</p>
                         <div>
-                            <CountdownTimer date={date}></CountdownTimer>
+                            <CountdownTimer className="timer" date={date}></CountdownTimer>
+                            <div>days hours minutes seconds</div>
+                        </div>
+
+                        {/* map */}
+                        <div className="map">
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                frameBorder="0"
+                                style={{ border: 0 }}
+                                src={`https://www.google.com/maps/embed/v1/place?q=${startingPoint}&key=AIzaSyCt-sC6cQvHOzRPWZzlYRhJp-zEnBlNBFQ`}
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+
+                        <div className="distance">
+                            Distance: {distance} km
                         </div>
                     </div>
                 </div>
+
+                <div className="description">
+                    {description}
+                </div>
             </div>
 
-
-            {/* <div className="card">
-                <div className="image">
-                    <img src={imageUrl} alt="route" />
-                </div>
-                <div className="details">
-
-                    <p className="dates">{DateFormatter(date)}</p>
-                    <p className="description">{description}</p>
-                </div>
-            </div> */}
         </div>
     );
 }
